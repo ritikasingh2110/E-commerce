@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f2f6f7;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #009688;
+    margin-bottom: 20px;
+}
+
+#tt {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    color: #ff7043;
+    margin-bottom: 30px;
+}
+
+a {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    font-size: 24px;
+    color: #009688;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #ffab40;
+}
+
+.card {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.card > div {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.card > div:hover {
+    transform: translateY(-5px);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.card h2 {
+    font-size: 16px;
+    color: #333;
+    height: 48px;
+    overflow: hidden;
+}
+
+.card h4 {
+    font-size: 14px;
+    color: #555;
+    height: 60px;
+    overflow: hidden;
+}
+
+.card p {
+    font-size: 18px;
+    font-weight: bold;
+    color: #009688;
+    margin: 10px 0;
+}
+
+.card button {
+    background-color: #ef5350;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.card button:hover {
+    background-color: #c62828;
+}
+      
+    </style>
+    <script src="https://kit.fontawesome.com/b8f397292a.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h1>Your Cart</h1>
+    <!-- <input type="text" name="" id="search" placeholder="Search item..."> -->
+    <!-- <button onclick="search()"><i class="fa-solid fa-magnifying-glass"></i></button> -->
+     <h1 id="tt">Total</h1>
+    <a href="fetch2.html"><i class="fa-solid fa-house"></i></i></i></a>
+    <div class="card"></div>
+</body>
+</html>
+<script>
+    let fava=JSON.parse(localStorage.getItem("fav")) || []
+    let ans=fava.reduce((acc,el)=>{
+        return acc+el.price;
+    },0)
+    document.querySelector("#tt").innerText=ans;
+    display(fava);
+    function display(arr){
+        document.querySelector(".card").innerText="";
+        arr.forEach((el,i) => {
+            let box=document.createElement("div")
+            let ig=document.createElement("img")
+            ig.setAttribute("src",el.image);
+            let title=document.createElement("h2");
+            title.innerText=el.title;
+            let dis=document.createElement("h4")
+            dis.innerHTML=el.description
+            let button = document.createElement("button")
+            button.innerText = el.rating.rate
+            let price = document.createElement("p")
+            price.innerText = `₹${el.price}`
+            let add = document.createElement("button")
+            add.innerText = "Remove"
+            add.addEventListener("click",()=>{
+                // fav.push(el);
+                fava.splice(i,1);
+                localStorage.setItem("fav", JSON.stringify(fava));
+                display(fava);
+            })
+            box.append(ig,title,dis,button,price,add);
+            document.querySelector(".card").append(box);
+
+        });
+        
+    }
+</script>
